@@ -42,6 +42,8 @@ public class StudentIT {
 
     private final Faker faker = new Faker();
 
+
+
     @Test
     void itShouldAddStudent() throws Exception {
         //Given
@@ -122,5 +124,7 @@ public class StudentIT {
         resultActions.andExpect(status().isOk());
         boolean exists = studentRepository.existsById(id);
         assertThat(exists).isFalse();
+
+
     }
 }
