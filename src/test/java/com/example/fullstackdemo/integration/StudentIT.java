@@ -30,97 +30,97 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 @AutoConfigureMockMvc
 public class StudentIT {
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @Autowired
-//    private ObjectMapper objectMapper;
-//
-//    @Autowired
-//    private StudentRepository studentRepository;
-//
-//    private final Faker faker = new Faker();
-//
-//    @Test
-//    void itShouldAddStudent() throws Exception {
-//        //Given
-//        String name = String.format(
-//                "%s %s",
-//                faker.name().firstName(),
-//                faker.name().lastName());
-//
-//        Student student = new Student(
-//                name,
-//                String.format("%s@gmail2.com", faker.name().firstName()),
-//                Gender.FEMALE);
-//        //When
-//        ResultActions resultActions = mockMvc
-//                        .perform(post("/api/v1/students")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(student)));
-//        //Then
-//        resultActions.andExpect(status().isOk());
-//
-//        List<Student> students = studentRepository.findAll();
-//        assertThat(students)
-//                .usingElementComparatorIgnoringFields("id")
-//                .contains(student);
-//    }
-//
-//    @Test
-//    void canDeleteStudent() throws Exception {
-//        // given
-//        String name = String.format(
-//                "%s %s",
-//                faker.name().firstName(),
-//                faker.name().lastName()
-//        );
-//
-//        String email = String.format("%s@amigoscode.edu",
-//                StringUtils.trimAllWhitespace(name.trim().toLowerCase()));
-//
-//        Student student = new Student(
-//                name,
-//                email,
-//                Gender.FEMALE
-//        );
-//
-//        mockMvc.perform(post("/api/v1/students")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(student)))
-//                .andExpect(status().isOk());
-//
-//        MvcResult getStudentsResult = mockMvc.perform(get("/api/v1/students")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//        String contentAsString = getStudentsResult
-//                .getResponse()
-//                .getContentAsString();
-//
-//        List<Student> students = objectMapper.readValue(
-//                contentAsString,
-//                new TypeReference<>() {
-//                }
-//        );
-//
-//        long id = students.stream()
-//                .filter(s -> s.getEmail().equals(student.getEmail()))
-//                .map(Student::getId)
-//                .findFirst()
-//                .orElseThrow(() ->
-//                        new IllegalStateException(
-//                                "student with email: " + email + " not found"));
-//
-//        // when
-//        ResultActions resultActions = mockMvc
-//                .perform(delete("/api/v1/students/" + id));
-//
-//        // then
-//        resultActions.andExpect(status().isOk());
-//        boolean exists = studentRepository.existsById(id);
-//        assertThat(exists).isFalse();
-//    }
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    private final Faker faker = new Faker();
+
+    @Test
+    void itShouldAddStudent() throws Exception {
+        //Given
+        String name = String.format(
+                "%s %s",
+                faker.name().firstName(),
+                faker.name().lastName());
+
+        Student student = new Student(
+                name,
+                String.format("%s@gmail2.com", faker.name().firstName()),
+                Gender.FEMALE);
+        //When
+        ResultActions resultActions = mockMvc
+                .perform(post("/api/v1/students")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(student)));
+        //Then
+        resultActions.andExpect(status().isOk());
+
+        List<Student> students = studentRepository.findAll();
+        assertThat(students)
+                .usingElementComparatorIgnoringFields("id")
+                .contains(student);
+    }
+
+    @Test
+    void canDeleteStudent() throws Exception {
+        // given
+        String name = String.format(
+                "%s %s",
+                faker.name().firstName(),
+                faker.name().lastName()
+        );
+
+        String email = String.format("%s@amigoscode.edu",
+                StringUtils.trimAllWhitespace(name.trim().toLowerCase()));
+
+        Student student = new Student(
+                name,
+                email,
+                Gender.FEMALE
+        );
+
+        mockMvc.perform(post("/api/v1/students")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(student)))
+                .andExpect(status().isOk());
+
+        MvcResult getStudentsResult = mockMvc.perform(get("/api/v1/students")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentAsString = getStudentsResult
+                .getResponse()
+                .getContentAsString();
+
+        List<Student> students = objectMapper.readValue(
+                contentAsString,
+                new TypeReference<>() {
+                }
+        );
+
+        long id = students.stream()
+                .filter(s -> s.getEmail().equals(student.getEmail()))
+                .map(Student::getId)
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalStateException(
+                                "student with email: " + email + " not found"));
+
+        // when
+        ResultActions resultActions = mockMvc
+                .perform(delete("/api/v1/students/" + id));
+
+        // then
+        resultActions.andExpect(status().isOk());
+        boolean exists = studentRepository.existsById(id);
+        assertThat(exists).isFalse();
+    }
 }
